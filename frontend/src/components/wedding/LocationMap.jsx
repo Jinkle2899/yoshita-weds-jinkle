@@ -14,7 +14,7 @@ const TIPS = [
   {
     icon: Hotel,
     title: "Stay",
-    body: "Aashish Vatika hosts on-site accommodations for close family. Curated partner hotels within 10 minutes shared upon RSVP.",
+    body: "Aashish Vatika hosts on-site accommodations for close family. Curated partner hotels within 10 minutes, with full details shared in your personalised travel pack.",
   },
   {
     icon: MapPin,
