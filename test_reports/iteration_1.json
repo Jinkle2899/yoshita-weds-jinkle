@@ -1,0 +1,49 @@
+{
+  "summary": "Frontend-only wedding invitation app tested end-to-end. All sections, navigation, countdown, mobile menu, and venue map work correctly. No critical bugs found.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Hero & Footer", "issues": ["'Jinkle&Yoshita' renders without spaces around the ampersand in the hero h1 (text content reads 'Jinkle&Yoshita') because the ampersand <span> has no whitespace around it; visually OK due to layout, but textContent has no spaces. Cosmetic/SEO consideration only."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Optional) Suppress or fix Framer Motion useScroll warning: 'Please ensure that the container has a non-static position, like relative, fixed, or absolute to ensure scroll offset is calculated correctly.' Originates from Hero useScroll target ref; section element should have position relative (it does have `relative` class, but warning still appears at mount before layout). Low priority."
+  ],
+  "critical_code_review_comments": [
+    "Hero.jsx countdown interval uses Date.now() each tick — fine, no leaks.",
+    "Nav.jsx scrollIntoView relies on native smooth scroll; works alongside Lenis. OK.",
+    "LocationMap iframe filter (invert+hue-rotate) styles the map nicely; loading=lazy used.",
+    "Footer: Contains stray reference to RSVP in venue 'Stay' tip body though task says RSVP NOT NEEDED — copy mentions 'shared upon RSVP'. Consider rewording."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (not tested per request)", "frontend": "100%"},
+  "test_credentials": "N/A",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Verified data-testids: hero-section, hero-couple-names, hero-countdown, countdown-{days|hours|minutes|seconds}, main-nav, nav-logo, nav-{label}-link x8 (story/journey/events/schedule/gallery/raw/gifts/venue), mobile-menu-toggle, mobile-menu, mobile-nav-{label}-link x8, events-section + event-{key} x5 (mehendi/haldi/sangeet/wedding/reception), schedule-section + schedule-{day-name} x4, our-journey-section + journey-item-{year} x5, gallery-curated-section + gallery-curated-{i}, gallery-raw-section + raw-photo-{i} x6, registry-section + registry-tile-{i} x3, location-section + venue-map (iframe inside) + directions-btn + venue-tip-{i} x3, footer-section + footer-map-link + back-to-top. Note event cards use `event-{key}` NOT `event-card-{i}`; gallery curated uses `gallery-curated-{i}` NOT `gallery-photo-{i}`.",
+  "validated_flows": [
+    "Hero renders with 'Jinkle' and 'Yoshita', SAVE THE DATE label, '26 · November · 2026' date label, palace background image loads",
+    "Countdown shows Days/Hours/Minutes/Seconds; days=209 (correct for 26-Nov-2026 from now), seconds tick down every 1s (verified 04 -> 03)",
+    "Main nav has J & Y logo, '26 · 11 · 2026' tag, and exactly 8 anchor links",
+    "All 8 nav links scroll to their respective sections (#story #journey #events #schedule #gallery #raw #gifts #venue) — each section visible after click",
+    "Mobile viewport (375px): mobile-menu-toggle visible, opens fullscreen menu with 8 links, closes after click",
+    "Tablet viewport (768px): main-nav visible (desktop nav)",
+    "5 journey-item-{year} cards (2019/2020/2022/2024/2026)",
+    "5 event cards (mehendi, haldi, sangeet, wedding, reception)",
+    "4 schedule days",
+    "6 raw photos (polaroids)",
+    "3 registry tiles",
+    "Google Maps iframe loaded with src https://www.google.com/maps?q=Aashish+Vatika+Udaipur+Rajasthan&output=embed; Get Directions button has correct external URL",
+    "Footer 'Jinkle & Yoshita' large H2 renders; back-to-top button scrolls to top (scrollY=0)",
+    "All <img> elements loaded successfully (0 broken images)",
+    "Console: 0 errors, 1 framer-motion warning (non-blocking)"
+  ],
+  "rca of the issue": "No bugs to RCA."
+}
