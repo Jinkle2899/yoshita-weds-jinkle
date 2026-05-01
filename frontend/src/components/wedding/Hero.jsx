@@ -69,7 +69,7 @@ export default function Hero() {
           transition={{ duration: 1.4, delay: 0.6 }}
           className="flex flex-col items-center gap-3"
         >
-          <span className="text-[10px] uppercase tracking-[0.4em] text-[#D4AF37]/90 md:text-xs">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-[#D4AF37]/90 md:text-xl">
             Save the Date
           </span>
           <span className="ornament-line text-[10px] uppercase tracking-[0.35em] text-white/40 md:text-xs">
@@ -85,11 +85,11 @@ export default function Hero() {
             className="font-serif-display text-[clamp(3rem,10vw,8rem)] font-light leading-[0.9] tracking-tighter text-[#EAEAEA]"
             data-testid="hero-couple-names"
           >
-            <span className="block italic">{WEDDING.groom}</span>
-            <span className="my-2 block text-[#D4AF37] font-serif-display text-[0.6em] italic">
-              &amp;
-            </span>
             <span className="block italic">{WEDDING.bride}</span>
+            <span className="my-2 block text-[#D4AF37] font-serif-display text-[0.6em] italic">
+              weds
+            </span>
+            <span className="block italic">{WEDDING.groom}</span>
           </motion.h1>
 
           <motion.p

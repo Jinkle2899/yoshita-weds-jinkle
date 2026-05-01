@@ -8,17 +8,47 @@ export default function OurStory() {
     target: ref,
     offset: ["start end", "end start"],
   });
+
   const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "12%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
+
+  // Parent container for stagger effect
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  // Individual paragraph animation
+  const item = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+      filter: "blur(6px)",
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 1,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
   return (
     <section
       id="story"
       ref={ref}
       className="relative overflow-hidden py-24 md:py-40"
-      data-testid="our-story-section"
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:grid-cols-12 md:gap-16 md:px-10">
+        
         {/* Text column */}
         <motion.div
           style={{ y: textY }}
@@ -36,33 +66,70 @@ export default function OurStory() {
                 Our Story
               </span>
             </div>
+
             <h2 className="font-serif-display text-4xl font-light italic leading-[1.05] text-[#EAEAEA] md:text-5xl lg:text-6xl">
-              A chapter that began <br />
-              <span className="gold-shimmer">quietly</span>, and never <br />
-              stopped being written.
+              A chapter written in <br />
+              <span className="gold-shimmer">tradition</span>, and <br />
+              discovered in love.
             </h2>
-            <div className="mt-10 space-y-6 text-base leading-relaxed text-white/60 md:text-[17px]">
-              <p>
-                It started as a glance across a crowded courtyard in Jaipur — the
-                kind you pretend you didn&apos;t steal. It grew through letters
-                written at 2 AM, shared playlists that somehow always knew,
-                and a hundred small silences that said more than words.
-              </p>
-              <p>
-                Somewhere between the monsoons and the mountains, between
-                laughter and the kind of fights you forgive before they end, we
-                became a <em className="text-[#D4AF37] not-italic">we</em>.
-              </p>
-              <p className="font-serif-display text-xl italic text-white/80">
-                &ldquo;And now, we bring our favourite people to the city that
-                feels most like us — Udaipur — to witness the beginning of
+
+            {/* Animated paragraphs */}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mt-10 space-y-6 text-base leading-relaxed text-white/60 md:text-[17px]"
+            >
+              
+              <motion.p variants={item}>
+                In November 2025, in the quiet warmth of Kherwara, Rajasthan,
+                our paths were gently brought together — not by chance, but by
+                something older, something deeper… a promise woven through
+                families, faith, and time.
+              </motion.p>
+
+              <motion.p variants={item}>
+                What began as a meeting of two strangers soon turned into
+                lingering conversations, shy smiles, and moments that stayed
+                long after they passed. In the pauses between words, in the
+                comfort of being understood, something beautiful began to take
+                shape.
+              </motion.p>
+
+              <motion.p variants={item}>
+                Like the desert meeting the monsoon, unexpected yet meant to be,
+                our worlds slowly intertwined — steady, certain, and full of
+                grace.
+              </motion.p>
+
+              <motion.p variants={item}>
+                Somewhere between tradition and choice, between what was planned
+                and what was felt, we became a{" "}
+                <em className="text-[#D4AF37] not-italic">we</em>.
+              </motion.p>
+
+              <motion.p
+                variants={item}
+                className="font-serif-display text-xl italic text-white/80"
+              >
+                &ldquo;And now, with hearts full and hands entwined, we invite our
+                beloved people to Udaipur — to witness the beginning of our
                 forever.&rdquo;
-              </p>
-            </div>
+              </motion.p>
+
+              <motion.p
+                variants={item}
+                className="font-serif-display text-lg italic text-[#D4AF37]/80"
+              >
+                A love that was arranged… and then, truly found.
+              </motion.p>
+
+            </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* Image column with overlap */}
+        {/* Image column */}
         <motion.div
           style={{ y: imgY }}
           className="relative md:col-span-6 md:col-start-7"
@@ -77,7 +144,6 @@ export default function OurStory() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
           </div>
 
-          {/* Overlapping accent */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -93,6 +159,7 @@ export default function OurStory() {
             />
           </motion.div>
         </motion.div>
+
       </div>
     </section>
   );
