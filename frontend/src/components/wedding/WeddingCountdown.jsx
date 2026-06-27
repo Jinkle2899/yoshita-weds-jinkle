@@ -1,5 +1,5 @@
 import { Play, Pause } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { WEDDING, MEDIA } from "../../lib/weddingData";
 import { useWeddingAudio } from "./WeddingAudioContext";
@@ -10,6 +10,40 @@ const EASE = [0.16, 1, 0.3, 1];
 export default function WeddingCountdown() {
   const weddingDate = new Date(WEDDING.date).getTime();
   const prefersReducedMotion = useReducedMotion();
+  const videoRef = useRef(null);
+
+  // iOS Low Power Mode (and some other battery-saving contexts) can
+  // silently block autoplay even with muted+playsinline+autoplay all
+  // present — this is Apple's own platform policy, not something HTML
+  // attributes can force. When blocked, Safari shows its own native
+  // play-button overlay on top of the poster image until playback
+  // actually starts, which can briefly look like two stacked play
+  // buttons next to our custom one (this is what showed up in
+  // production). There's no way to suppress the native overlay
+  // outright, but we can detect whether play() actually succeeded and,
+  // if it didn't, show an explicit "tap to play" state instead of
+  // leaving that ambiguous moment to chance.
+  const [videoBlocked, setVideoBlocked] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.catch(() => setVideoBlocked(true));
+    }
+  }, [prefersReducedMotion]);
+
+  const handleManualVideoPlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video
+      .play()
+      .then(() => setVideoBlocked(false))
+      .catch(() => setVideoBlocked(true));
+  };
 
   const [time, setTime] = useState({
     days: 0,
@@ -135,9 +169,9 @@ export default function WeddingCountdown() {
               className="absolute inset-0"
             >
               <video
-                src="https://res.cloudinary.com/df7dpbwpq/video/upload/v1782585905/IMG_6523_vdg4j1.mp4"
+                ref={videoRef}
+                src="https://res.cloudinary.com/df7dpbwpq/video/upload/v1782587558/IMG_6523_online-video-cutter.com_hdbfse.mp4"
                 poster={MEDIA.hero_palace}
-                autoPlay={!prefersReducedMotion}
                 loop={!prefersReducedMotion}
                 muted
                 playsInline
@@ -146,6 +180,27 @@ export default function WeddingCountdown() {
                 className="h-full w-full object-cover"
               />
             </motion.div>
+
+            {/* Explicit fallback: only shown if play() actually failed
+                (e.g. iOS Low Power Mode silently blocking autoplay),
+                rather than relying on the browser's own ambiguous
+                native play overlay stacking next to our custom button
+                below. Tapping this calls play() directly inside a user
+                gesture, which iOS permits even when autoplay alone
+                was blocked. */}
+            {videoBlocked && !prefersReducedMotion && (
+              <button
+                type="button"
+                onClick={handleManualVideoPlay}
+                aria-label="Play background video"
+                className="absolute inset-0 z-10 flex items-center justify-center bg-black/20"
+              >
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 backdrop-blur-md">
+                  <Play size={26} fill="white" className="ml-0.5 text-white" />
+                </span>
+              </button>
+            )}
+
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/10 to-transparent" />
 
             {/* fine grain, matching the texture treatment used on the
