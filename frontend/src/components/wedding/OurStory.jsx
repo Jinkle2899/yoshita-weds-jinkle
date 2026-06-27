@@ -12,7 +12,6 @@ export default function OurStory() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "12%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
 
-  // Parent container for stagger effect
   const container = {
     hidden: {},
     show: {
@@ -23,7 +22,6 @@ export default function OurStory() {
     },
   };
 
-  // Individual paragraph animation
   const item = {
     hidden: {
       opacity: 0,
@@ -45,10 +43,9 @@ export default function OurStory() {
     <section
       id="story"
       ref={ref}
-      className="relative overflow-hidden py-24 md:py-40"
+      className="relative overflow-hidden py-20 md:py-40"
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:grid-cols-12 md:gap-16 md:px-10">
-        
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 md:grid-cols-12 md:gap-16 md:px-10">
         {/* Text column */}
         <motion.div
           style={{ y: textY }}
@@ -67,9 +64,17 @@ export default function OurStory() {
               </span>
             </div>
 
-            <h2 className="font-serif-display text-4xl font-light italic leading-[1.05] text-[#EAEAEA] md:text-5xl lg:text-6xl">
-              A chapter written in <br />
-              <span className="gold-shimmer">tradition</span>, and <br />
+            {/* Hardcoded <br> tags removed on mobile — line breaks chosen
+                for a wide desktop column read awkwardly once wrapped into
+                a narrow phone width. Below `md`, the heading wraps
+                naturally; from `md` up, the original three-line break
+                is restored via responsive <br> elements that only render
+                at that breakpoint. */}
+            <h2 className="font-serif-display text-[2.1rem] font-light italic leading-[1.15] text-[#EAEAEA] sm:text-4xl md:text-5xl md:leading-[1.05] lg:text-6xl">
+              A chapter written in{" "}
+              <br className="hidden md:inline" />
+              <span className="gold-shimmer">tradition</span>, and{" "}
+              <br className="hidden md:inline" />
               discovered in love.
             </h2>
 
@@ -79,9 +84,8 @@ export default function OurStory() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="mt-10 space-y-6 text-base leading-relaxed text-white/60 md:text-[17px]"
+              className="mt-8 space-y-6 text-[15px] leading-relaxed text-white/60 md:mt-10 md:text-[17px]"
             >
-              
               <motion.p variants={item}>
                 In November 2025, in the quiet warmth of Kherwara, Rajasthan,
                 our paths were gently brought together — not by chance, but by
@@ -111,7 +115,7 @@ export default function OurStory() {
 
               <motion.p
                 variants={item}
-                className="font-serif-display text-xl italic text-white/80"
+                className="font-serif-display text-lg italic text-white/80 md:text-xl"
               >
                 &ldquo;And now, with hearts full and hands entwined, we invite our
                 beloved people to Udaipur — to witness the beginning of our
@@ -120,11 +124,10 @@ export default function OurStory() {
 
               <motion.p
                 variants={item}
-                className="font-serif-display text-lg italic text-[#D4AF37]/80"
+                className="font-serif-display text-base italic text-[#D4AF37]/80 md:text-lg"
               >
                 A love that was arranged… and then, truly found.
               </motion.p>
-
             </motion.div>
           </motion.div>
         </motion.div>
@@ -136,7 +139,7 @@ export default function OurStory() {
         >
           <div className="relative aspect-[3/4] w-full overflow-hidden">
             <img
-              src={MEDIA.story_floral}
+              src={MEDIA.ourStoryImg}
               alt="Dark moody floral"
               className="h-full w-full object-cover grayscale-[30%]"
               draggable={false}
@@ -144,12 +147,17 @@ export default function OurStory() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
           </div>
 
+          {/* On mobile, the floating jewelry detail moves from an
+              absolutely-positioned overlap (which only worked at desktop
+              proportions) into a normal inline element directly below the
+              main image — same content, no overflow risk, instead of
+              disappearing entirely below `md`. */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.4 }}
-            className="absolute -bottom-12 -left-6 hidden aspect-square w-48 overflow-hidden border border-[#D4AF37]/30 md:block lg:w-60"
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="relative mx-auto mt-5 aspect-square w-36 overflow-hidden border border-[#D4AF37]/30 sm:w-44 md:absolute md:-bottom-12 md:-left-6 md:mt-0 md:w-48 lg:w-60"
           >
             <img
               src={MEDIA.details_curated}
@@ -159,7 +167,6 @@ export default function OurStory() {
             />
           </motion.div>
         </motion.div>
-
       </div>
     </section>
   );

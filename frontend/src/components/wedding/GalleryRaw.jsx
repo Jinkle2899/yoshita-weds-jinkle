@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
-import { MEDIA } from "../../lib/weddingData";
+import { MEDIA, RAW_IMAGES } from "../../lib/weddingData";
 
 const RAWS = [
-  { src: MEDIA.raw1, caption: "First holiday · Ladakh, 2022", rotate: -3, offset: "md:translate-y-10" },
-  { src: MEDIA.raw2, caption: "His terrace, the golden hour", rotate: 2, offset: "md:-translate-y-6" },
-  { src: MEDIA.raw3, caption: "A boat at sunset · Alibaug", rotate: -2, offset: "md:translate-y-4" },
-  { src: MEDIA.story_floral, caption: "Her mother's garden", rotate: 3, offset: "md:-translate-y-10" },
-  { src: MEDIA.details_curated, caption: "The ring — still unworn", rotate: -1, offset: "md:translate-y-8" },
-  { src: MEDIA.palace_arch, caption: "Udaipur, the day we decided", rotate: 1, offset: "md:-translate-y-2" },
+  { src: RAW_IMAGES.raw1, caption: "Kolukkumalai View Point · Munnar", rotate: -3, offset: "md:translate-y-10" },
+  { src: RAW_IMAGES.raw2, caption: "The terrace, Udaipur", rotate: 2, offset: "md:-translate-y-6" },
+  { src: RAW_IMAGES.raw3, caption: "Small Proposal · Ahmedabad", rotate: -2, offset: "md:translate-y-4" },
+  { src: RAW_IMAGES.raw4, caption: "Rishikesh Resort", rotate: 3, offset: "md:-translate-y-10" },
+  { src: RAW_IMAGES.raw5, caption: "Small Gesture of Love · Ahmedabad", rotate: -1, offset: "md:translate-y-8" },
+  { src: RAW_IMAGES.raw6, caption: "Lake · Kodaikanal", rotate: 1, offset: "md:-translate-y-2" },
 ];
 
 export default function GalleryRaw() {

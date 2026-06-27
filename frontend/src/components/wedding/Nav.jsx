@@ -7,8 +7,9 @@ const NAV_ITEMS = [
   { label: "Journey", href: "#journey" },
   { label: "Events", href: "#events" },
   { label: "Schedule", href: "#schedule" },
-  { label: "Gallery", href: "#gallery" },
+  // { label: "Gallery", href: "#gallery" },
   { label: "Raw", href: "#raw" },
+  { label: "Her Words", href: "#her-words" },
   { label: "Gifts", href: "#gifts" },
   { label: "Venue", href: "#venue" },
 ];
@@ -24,22 +25,44 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open, so the page
+  // behind it can't scroll underneath the overlay (a separate, common
+  // mobile-nav bug from the background-color one below).
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const go = (href) => {
     setOpen(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // The header bar's own background previously only reacted to `scrolled`,
+  // not to whether the mobile menu was open. That meant tapping the
+  // hamburger near the very top of the page (before scrolling past 40px)
+  // left the header strip transparent while the full-screen menu beneath
+  // it was opaque — producing a visible seam/mismatch at the top of the
+  // screen. The header bar must go solid whenever EITHER condition is
+  // true, not just on scroll.
+  const headerIsSolid = scrolled || open;
+
   return (
     <motion.header
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-black/60 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 backdrop-blur-xl transition-all duration-500 ${
+        headerIsSolid
+          ? "border-b border-white/5"
+          : ""
       }`}
+      style={{
+        backgroundColor: headerIsSolid ? "rgba(0,0,0,0.85)" : "transparent",
+      }}
       data-testid="main-nav"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
@@ -104,7 +127,17 @@ export default function Nav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[#0A0A0A]/95 backdrop-blur-2xl md:hidden"
+            // Solid background color carries the obscuring on its own —
+            // backdrop-blur is now purely decorative on top, not load-
+            // bearing. Some mobile browsers fail to composite
+            // backdrop-filter correctly (it can silently no-op), which
+            // was letting the Hero content show through almost fully
+            // visible underneath what should have been an opaque menu.
+            // `h-[100dvh] w-screen` + `fixed inset-0` guarantees full
+            // viewport coverage even with mobile browser chrome
+            // (address bar) resizing the viewport during scroll.
+            className="fixed inset-0 z-40 flex h-[100dvh] w-screen flex-col items-center justify-center gap-8 overflow-y-auto bg-[#0A0A0A] py-20 backdrop-blur-2xl md:hidden"
+            style={{ backgroundColor: "#0A0A0A" }}
             data-testid="mobile-menu"
           >
             {NAV_ITEMS.map((item, i) => (

@@ -25,8 +25,8 @@ export default function OurJourney() {
             Our Journey
           </span>
           <h2 className="mt-6 font-serif-display text-4xl font-light italic leading-tight text-[#EAEAEA] md:text-5xl lg:text-6xl">
-            Seven winters, a thousand <br />
-            <span className="gold-shimmer">small moments</span>.
+           A Roka, a year of in-between  <br />
+            <span className="gold-shimmer">and the moments we made sure to show up for</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-md text-sm text-white/50 md:text-base">
             A timeline of our becoming — the moments we&apos;d relive, if life
@@ -64,7 +64,7 @@ export default function OurJourney() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 font-serif-display text-6xl italic text-[#D4AF37]/80 md:text-7xl">
-                      {m.year}
+                      {m.month}
                     </div>
                   </div>
                 </motion.div>
