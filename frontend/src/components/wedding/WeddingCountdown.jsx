@@ -61,7 +61,9 @@ export default function WeddingCountdown() {
     >
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(circle, #D4AF3722 0%, transparent 70%)" }}
+        style={{
+          background: "radial-gradient(circle, #D4AF3722 0%, transparent 70%)",
+        }}
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
@@ -69,7 +71,10 @@ export default function WeddingCountdown() {
           initial={{ opacity: 0, y: 40, clipPath: "inset(0 0 12% 0)" }}
           whileInView={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" }}
           viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 1.1, ease: EASE }}
+          transition={{
+            duration: prefersReducedMotion ? 0.01 : 1.1,
+            ease: EASE,
+          }}
           className="
             relative overflow-hidden rounded-[28px]
             border border-[#D4AF37]/15
@@ -130,14 +135,13 @@ export default function WeddingCountdown() {
               className="absolute inset-0"
             >
               <video
-              // src="https://res.cloudinary.com/df7dpbwpq/video/upload/v1782567188/IMG_6644_a2iqwp.mov"
-                src="https://res.cloudinary.com/df7dpbwpq/video/upload/v1782566740/IMG_6523_zswxbp.mov"
+                src="https://res.cloudinary.com/df7dpbwpq/video/upload/v1782585905/IMG_6523_vdg4j1.mp4"
                 poster={MEDIA.hero_palace}
                 autoPlay={!prefersReducedMotion}
                 loop={!prefersReducedMotion}
                 muted
                 playsInline
-                preload="metadata"
+                preload="auto"
                 aria-label={`${WEDDING.bride} and ${WEDDING.groom}`}
                 className="h-full w-full object-cover"
               />
@@ -165,14 +169,25 @@ export default function WeddingCountdown() {
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]
                 "
               >
-                <svg viewBox="0 0 84 84" className="absolute inset-0 -rotate-90">
+                <svg
+                  viewBox="0 0 84 84"
+                  className="absolute inset-0 -rotate-90"
+                >
                   <circle
-                    cx="42" cy="42" r={radius}
-                    fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"
+                    cx="42"
+                    cy="42"
+                    r={radius}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.2)"
+                    strokeWidth="1.5"
                   />
                   <circle
-                    cx="42" cy="42" r={radius}
-                    fill="none" stroke="#D4AF37" strokeWidth="1.5"
+                    cx="42"
+                    cy="42"
+                    r={radius}
+                    fill="none"
+                    stroke="#D4AF37"
+                    strokeWidth="1.5"
                     strokeDasharray={circumference}
                     strokeDashoffset={dashOffset}
                     strokeLinecap="round"

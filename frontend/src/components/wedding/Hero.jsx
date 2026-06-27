@@ -149,9 +149,9 @@ export default function Hero() {
         className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-[9px] uppercase tracking-[0.4em] text-white/40">
+          {/* <span className="text-[9px] uppercase tracking-[0.4em] text-white/40">
             Scroll
-          </span>
+          </span> */}
           <div className="relative h-8 w-px overflow-hidden bg-white/10">
             <motion.div
               animate={
